@@ -1,348 +1,434 @@
-================================================================
-  WiFiMonitor — KURULUM VE KULLANIM KILAVUZU
-  Windows 10 / 11 icin, EXE haline getirme dahil
-================================================================
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║              W I F I M O N I T O R                           ║
+║                                                              ║
+║              Kurulum ve Kullanım Kılavuzu                    ║
+║                                                              ║
+║              Windows 10 / 11 için                            ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
 
 
-================================================================
-  BOLUM 1 — GEREKSINIMLER
-================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  📌 BU KILAVUZ NE ANLATIYOR?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Kuruluma baslamadan once iki sey kurulu olmali:
+  Bu dosya, WiFiMonitor programını sıfırdan kurmayı,
+  çalıştırmayı ve kullanmayı adım adım anlatır.
 
-  [1] Python 3.10 veya uzeri
-  [2] Npcap (ag paketi okumak icin surucu)
+  Hiç bilmeyen biri bile takip edebilir. Sırayla git,
+  hiçbir adımı atlama.
 
-Kontrol etmek icin:
+  ⏱  Toplam süre: 10-15 dakika
+  📦  Kurulacak: Python + Npcap + 5 kütüphane
+  💻  Sonuç: Masaüstünde çift tıklanabilir bir .exe
 
-  1. Windows tusu -> "cmd" yaz -> Enter
-  2. Su komutu calistir:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🔍 ADIM 0 — PYTHON KURULU MU KONTROL ET
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ① Windows tuşuna bas, "cmd" yaz, Enter'a bas.
+     Siyah bir pencere açılır. Buna "komut istemi" denir.
+
+  ② Şu komutu yaz, Enter'a bas:
 
        py --version
 
-  3. Cikti "Python 3.12.x" gibi bir seyse Python kurulu.
-     "'py' is not recognized" hatasi alirsan -> BOLUM 2'ye gec.
-     Surum goruyorsan -> BOLUM 3'e gec (Npcap).
+  ③ Sonuç ne oldu?
+
+     ✅ "Python 3.12.x" gibi bir şey yazdıysa
+        → Python zaten kurulu. ADIM 2'ye atla.
+
+     ❌ "'py' is not recognized" gibi bir hata yazdıysa
+        → Python yok. ADIM 1'e geç.
 
 
-================================================================
-  BOLUM 2 — PYTHON KURULUMU (sadece Python yoksa)
-================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🐍 ADIM 1 — PYTHON KUR (Python yoksa)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  1. Tarayicida su adrese git:
+  ① Tarayıcıyı aç, şu adrese git:
+
        https://www.python.org/downloads/
 
-  2. Sari renkli "Download Python 3.12.x" butonuna bas.
+  ② Büyük SARI butona bas: "Download Python 3.12.x"
 
-  3. Indirilen dosyayi calistir.
+  ③ İndirilen dosyayı çift tıkla, kurulumu başlat.
 
-  4. ONEMLI: Kurulum ekraninin ALTINDA
-     "Add Python to PATH" kutusunu isaretle.
-     Bu kutu isaretli olmazsa program calismaz.
+  ④ ⚠️ ÇOK ÖNEMLİ:
+     Kurulumun İLK ekranında, en altta şu kutu var:
+     
+         ☐ Add Python to PATH
+     
+     Bu kutuyu MUTLAKA işaretle (✓ yap).
+     
+     İşaretlemezsen program çalışmaz. Bu, en sık
+     yapılan hatadır.
 
-  5. "Install Now" butonuna bas, bekle.
+  ⑤ "Install Now" butonuna bas, bekle.
 
-  6. Kurulum bitince bilgisayari yeniden baslat.
+  ⑥ Kurulum bitince bilgisayarı yeniden başlat.
 
-  7. CMD'de tekrar kontrol et:
+  ⑦ CMD'yi tekrar aç, kontrol et:
+
        py --version
 
-     Surum gorunduyse tamam. Gormediysen Python'u
-     kaldir, 1. adimdan tekrar kur. "Add to PATH"
-     kutusunu bu sefer kacirma.
+     ✅ Sürüm göründüyse → ADIM 2'ye geç.
+     ❌ Hâlâ hata veriyorsa → Python'u kaldır,
+        ④. adımdaki "Add to PATH" kutusunu işaretleyerek
+        tekrar kur.
 
 
-================================================================
-  BOLUM 3 — NPCAP KURULUMU
-================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🌐 ADIM 2 — NPCAP KUR (zorunlu!)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Npcap, Python'un ag paketlerini okuyabilmesi icin
-gereken surucudur. BU ADIM ATLANAMAZ.
+  Npcap, programın ağdaki cihazları görmesini sağlayan
+  bir sürücüdür. BU ADIM ATLANAMAZ.
 
-  1. Tarayicida:
+  ① Tarayıcıda:
+
        https://npcap.com/#download
 
-  2. "Download Npcap 1.79 installer" (veya en son surum)
-     butonuna bas.
+  ② "Download Npcap 1.79 installer" butonuna bas.
 
-  3. Indirilen dosyayi calistir.
+  ③ İndirilen dosyayı çalıştır.
 
-  4. Kurulum ekraninda:
-       [x] "Install Npcap in WinPcap API-compatible Mode"
-     Kutusunu MUTLAKA isaretle.
-     Diger ayarlara dokunma.
+  ④ ⚠️ Kurulum ekranında şu kutuyu MUTLAKA işaretle:
 
-  5. "Install" -> "Finish".
+         ☑ Install Npcap in WinPcap API-compatible Mode
 
-  6. Bilgisayari yeniden baslat.
+     Diğer ayarlara dokunma.
 
-Not: Npcap olmadan program acilsa bile tarama
-     calismaz, "Npcap bulunamadi" hatasi verir.
+  ⑤ "Install" → "Finish".
 
+  ⑥ Bilgisayarı yeniden başlat.
 
-================================================================
-  BOLUM 4 — KAYNAK KODU INDIR
-================================================================
-
-  1. GitHub repo sayfasina git (sana verilen link).
-
-  2. Sag ustteki yesil "<> Code" butonuna bas.
-
-  3. "Download ZIP" sec.
-
-  4. Indirilen "WiFiMonitor-main.zip" dosyasina
-     sag tik -> "Tumunu ayikla".
-
-  5. Cikan klasoru ac. Icinde "wifimon_gui.py" var.
-
-  6. Bu klasoru C:\Users\Tuna\Downloads altina tasi
-     (ya da nerede duruyorsa orada birak, yol onemli degil).
+  💡 Npcap olmadan program açılır ama "cihazları
+     tarayamaz". "Npcap bulunamadı" hatası verir.
 
 
-================================================================
-  BOLUM 5 — KUTUPHANELERI KUR (tek seferlik)
-================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  📥 ADIM 3 — PROGRAMI İNDİR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  1. CMD ac.
+  ① GitHub'da repo sayfasına git (sana verilen link).
 
-  2. Klasorunun icine gir. Ornek:
+  ② Sağ üstteki YEŞİL "<> Code" butonuna bas.
+
+  ③ "Download ZIP" seç.
+
+  ④ İndirilen "WiFiMonitor-main.zip" dosyasına
+     SAĞ TIK → "Tümünü ayıkla".
+
+  ⑤ Çıkan klasörün içinde "wifimon_gui.py" dosyası var.
+     Bu klasörü açık tut, birazdan kullanacağız.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  📚 ADIM 4 — KÜTÜPHANELERİ KUR (tek seferlik)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ① CMD aç.
+
+  ② Programın olduğu klasöre gir. Örnek:
 
        cd C:\Users\%USERNAME%\Downloads\WiFiMonitor-main
 
-     (%USERNAME% yerine kendi kullanici adin yazili olmali,
-      CMD otomatik doldurur, aynen yapistir.)
+     (%USERNAME% CMD tarafından otomatik doldurulur,
+      aynen yapıştır.)
 
-  3. Su komutu tek satir olarak calistir:
+  ③ Şu komutu TEK SATIR olarak yapıştır, Enter:
 
        py -m pip install PyQt6 scapy hostlens etherlyzer pyinstaller
 
-  4. 1-2 dakika bekle. "Successfully installed ..."
-     gorursen tamam.
+  ④ 1-2 dakika bekle. Bir sürü metin akar, normal.
 
-  Hata alirsan once pip'i guncelle:
+  ⑤ En sonda şunu görürsen TAMAM:
+
+       Successfully installed ...
+
+  ❌ Hata alırsan, önce şunu çalıştır:
 
        py -m pip install --upgrade pip
 
-  Sonra 3. adimi tekrar calistir.
+     Sonra ③. adımı tekrar dene.
 
 
-================================================================
-  BOLUM 6 — PYTHON ILE TEST ET (EXE'DEN ONCE)
-================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ▶️  ADIM 5 — PROGRAMI TEST ET
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  1. Ayni CMD penceresinde:
+  ① Aynı CMD penceresinde:
 
        py wifimon_gui.py
 
-  2. UAC onay penceresi acilir -> "Evet" de.
+  ② Ekranda mavi bir "İzin ver" penceresi çıkar
+     (UAC onayı). "Evet" butonuna bas.
 
-  3. Program penceresi acildi mi?
-       ACILDI  -> BOLUM 7'ye gec (exe yap).
-       ACILMADI -> BOLUM 10'a bak (sorun giderme).
+  ③ Program penceresi açıldı mı?
+
+     ✅ AÇILDI → ADIM 6'ya geç (exe yap).
+     ❌ AÇILMADI → KILAVUZUN EN ALTINDAKİ
+                    "SORUN GİDERME" bölümüne bak.
 
 
-================================================================
-  BOLUM 7 — EXE HALINE GETIR
-================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  📦 ADIM 6 — EXE HALİNE GETİR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  1. Ayni CMD'de, ayni klasorde:
+  Bu adım, programı tek dosya haline getirir.
+  Bir daha CMD açmana gerek kalmaz, çift tıklarsın.
+
+  ① CMD'de, aynı klasörde, şu komutu TEK SATIR
+     olarak yapıştır, Enter:
 
        py -m PyInstaller --onefile --windowed --uac-admin --hidden-import=scapy --hidden-import=scapy.all --hidden-import=scapy.arch.windows --hidden-import=scapy.layers.all --hidden-import=scapy.layers.inet --hidden-import=scapy.layers.l2 --hidden-import=scapy.layers.dns --hidden-import=hostlens --hidden-import=etherlyzer --name WiFiMonitor wifimon_gui.py
 
-  2. 1-2 dakika bekle. Bircok INFO satiri akar, normal.
+  ② 1-2 dakika bekle. Bir sürü "INFO" satırı akar,
+     normal. Panik yapma.
 
-  3. Bittiginde klasorde "dist" adinda bir klasor olusur.
+  ③ Bitince klasörde "dist" adında yeni bir klasör
+     oluşur.
 
-  4. Icine gir: "WiFiMonitor.exe" dosyasi orada.
+  ④ "dist" klasörüne gir. İçinde:
 
-  5. WiFiMonitor.exe dosyasina sag tik -> Kopyala.
+       WiFiMonitor.exe
 
-  6. Masaustune sag tik -> Yapistir.
+     İşte bu senin programın.
 
-  7. Masaustundeki WiFiMonitor.exe'ye sag tik ->
-     "Yonetici olarak calistir" -> "Evet".
+  ⑤ WiFiMonitor.exe'ye SAĞ TIK → Kopyala.
 
+  ⑥ Masaüstüne SAĞ TIK → Yapıştır.
 
-================================================================
-  BOLUM 8 — HER SEFERINDE YONETICI IZNI ISTEYMESIN
-================================================================
+  ⑦ Masaüstündeki WiFiMonitor.exe'ye SAĞ TIK →
+     "Yönetici olarak çalıştır" → "Evet".
 
-  (Opsiyonel, tek seferlik ayar)
-
-  1. Masaustundeki WiFiMonitor.exe'ye sag tik -> Ozellikler.
-
-  2. "Uyumluluk" sekmesine gec.
-
-  3. En alttaki "Bu programi yonetici olarak calistir"
-     kutusunu isaretle.
-
-  4. "Uygula" -> "Tamam".
-
-  Bundan sonra cift tiklamak yeterli, UAC sormaz.
+  🎉 TEBRİKLER! Programın hazır. Masaüstünde duruyor.
 
 
-================================================================
-  BOLUM 9 — PROGRAMI KULLANMA
-================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ⚙️  ADIM 7 — HER SEFERİNDE İZİN İSTEMESİN (opsiyonel)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Program acildiginda 3 adim:
+  Bunu yaparsan, bir daha "Yönetici olarak çalıştır"
+  demene gerek kalmaz. Çift tıklamak yeter.
 
-  ADIM 1 — Adaptor sec
-  --------------------
-  En ustteki "Adaptor" acilir listesinden internete
-  bagli Wi-Fi adaptorunu sec.
-  Genelde "Wi-Fi" veya "WLAN" yazar.
-  Emin degilsen: CMD'de "ipconfig" calistir, aktif
-  adaptorun adini gor.
+  ① Masaüstündeki WiFiMonitor.exe'ye SAĞ TIK →
+     "Özellikler".
 
-  ADIM 2 — Agi tara
-  -----------------
-  "Gateway" kutusu otomatik dolar. Dokunma.
-  (Yanlissa: ipconfig -> "Default Gateway" satirindaki
-   IP'yi kopyala, kutuya yapistir.)
+  ② "Uyumluluk" sekmesine geç.
 
-  "Agi Tara" butonuna bas.
-  3-5 saniye bekle.
+  ③ En alttaki şu kutuyu işaretle:
 
-  Tabloda cihazlar belirir:
-     IP       MAC              Uretici      Model
-     192.168.1.42  a4:50:46:...  Samsung    Galaxy S23
-     192.168.1.55  3c:5a:b4:...  Apple      iPhone
-     192.168.1.88  b0:be:76:...  TP-Link    Router
+       ☑ Bu programı yönetici olarak çalıştır
 
-  ADIM 3A — Trafigi izle
-  ----------------------
-  "Izlemeyi Baslat" butonuna bas.
-  Alt taraftaki siyah kutuda cihazlarin hangi siteye
-  gittigi akmaya baslar:
-
-     [DNS] 192.168.1.42 -> google.com
-     [TLS] 192.168.1.42 -> youtube.com
-     [TLS] 192.168.1.55 -> instagram.com
-     [HTTP] 192.168.1.88 GET /index.html
-
-  Durmak icin "Izlemeyi Durdur".
-
-  ADIM 3B — Bir cihazin internetini kes
-  -------------------------------------
-  1. Tablodan cihazi sec (satira tikla).
-  2. "Secili Cihazi At" butonuna bas.
-  3. Cihazin interneti kesilir.
-
-  Geri acmak icin: "Atmayi Durdur" butonuna bas.
-  Cihaz 5-10 saniye icinde yeniden baglanir.
-
-  Tum cihazlari birden atmak icin: "Tumunu At".
+  ④ "Uygula" → "Tamam".
 
 
-================================================================
-  BOLUM 10 — SORUN GIDERME
-================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🎮 ADIM 8 — PROGRAMI KULLANMA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  SORUN: "'py' is not recognized"
-  COZUM: Python PATH'te degil.
-         Python'u kaldir, tekrar kur,
-         "Add Python to PATH" kutusunu isaretle,
-         bilgisayari yeniden baslat.
+  Program açıldığında üstte iki kutu, ortada bir tablo,
+  altta siyah bir log alanı görürsün.
 
-  SORUN: "Npcap bulunamadi"
-  COZUM: Npcap kurulu degil veya yanlis modda.
-         npcap.com'dan tekrar kur,
-         "WinPcap API-compatible Mode" isaretli olsun,
-         bilgisayari yeniden baslat.
+  ┌──────────────────────────────────────────────────────────┐
+  │  ADIM A: Adaptör seç                                     │
+  └──────────────────────────────────────────────────────────┘
 
-  SORUN: "scapy bulunamadi"
-  COZUM: py -m pip install scapy
+     En üstteki "Adaptör" açılır listesinden internete
+     bağlı Wi-Fi adaptörünü seç.
 
-  SORUN: "PyQt6 bulunamadi"
-  COZUM: py -m pip install PyQt6
+     Genelde "Wi-Fi" veya "WLAN" yazar.
 
-  SORUN: EXE'ye cift tikliyorum, bir sey olmuyor
-  COZUM: CMD'den calistir, hatayi oku:
-         cd C:\Users\%USERNAME%\Downloads\dist
-         WiFiMonitor.exe
+     Emin değilsen: CMD'de "ipconfig" çalıştır,
+     aktif olan adaptörün adını orada görürsün.
 
-  SORUN: "Agi Tara"ya basinca program donuyor
-  COZUM: Kaynak kod eski surum. GitHub'dan tekrar indir,
-         yeni surumde tarama arka planda calisir.
+  ┌──────────────────────────────────────────────────────────┐
+  │  ADIM B: Ağı tara                                        │
+  └──────────────────────────────────────────────────────────┘
 
-  SORUN: Cihazlar taranmiyor, tablo bos
-  COZUM: 1. Dogru adaptoru sectiginden emin ol.
-         2. Modemde "AP isolation" / "client isolation"
-            ayari aciksa kapat.
-         3. Gateway IP'yi ipconfig ile kontrol et.
+     "Gateway" kutusu otomatik dolar. DOKUNMA.
 
-  SORUN: "Gateway MAC bulunamadi"
-  COZUM: Gateway IP yanlis. ipconfig calistir,
-         "Default Gateway" satirindaki IP'yi kutuya gir.
+     "Ağı Tara" butonuna bas. 3-5 saniye bekle.
 
-  SORUN: Cihaz atilmiyor, internet kesilmiyor
-  COZUM: 1. Programi yonetici olarak calistir.
-         2. Modemde statik ARP binding kapali olmali.
-         3. Hedef cihaz Wi-Fi'da mi, kontrol et.
+     Tabloda cihazlar belirir:
 
-  SORUN: Windows Defender exe'yi siliyor
-  COZUM: Windows Guvenlik -> Virus ve tehdit korumasi
-         -> Ayarlari yonet -> Dislamalar -> Dislama ekle
-         -> Klasor -> "dist" klasorunu sec.
+       ┌──────────────┬──────────────────┬─────────┬───────────┐
+       │ IP           │ MAC              │ Üretici │ Model     │
+       ├──────────────┼──────────────────┼─────────┼───────────┤
+       │ 192.168.1.42 │ a4:50:46:...     │ Samsung │ Galaxy S23│
+       │ 192.168.1.55 │ 3c:5a:b4:...     │ Apple   │ iPhone    │
+       │ 192.168.1.88 │ b0:be:76:...     │ TP-Link │ Router    │
+       └──────────────┴──────────────────┴─────────┴───────────┘
 
-  SORUN: "An administrator is required" hatasi
-  COZUM: Sag tik -> "Yonetici olarak calistir".
+  ┌──────────────────────────────────────────────────────────┐
+  │  ADIM C: Ne yapmak istiyorsun?                           │
+  └──────────────────────────────────────────────────────────┘
 
+     🔍 İZLEMEK İSTİYORSAN:
 
-================================================================
-  BOLUM 11 — ONEMLI NOTLAR
-================================================================
+        "İzlemeyi Başlat" butonuna bas.
 
-  - HTTPS icerigi gorunmez. Sadece site adi (domain)
-    gorunur. Sayfa icerigi, mesajlar, form verileri
-    sifreli oldugu icin okunamaz.
+        Alt taraftaki siyah kutuda cihazların hangi
+        siteye gittiği akmaya başlar:
 
-  - Bazi Android (10+) ve iOS (14+) cihazlar rastgele
-    MAC kullanir. Bu durumda uretici "?" gorunebilir.
+           [DNS] 192.168.1.42 -> google.com
+           [TLS] 192.168.1.42 -> youtube.com
+           [TLS] 192.168.1.55 -> instagram.com
 
-  - Bazi modemlerde "client isolation" aciksa cihazlar
-    birbirini goremez. Modem arayuzunden kapat.
+        Durdurmak için: "İzlemeyi Durdur".
 
-  - Program sadece kendi cihazini hedef listesinden
-    cikarmaz; kendi internetini kesmez.
+     ✂️ İNTERNETİNİ KESMEK İSTİYORSAN:
 
-  - Atma islemi sirasinda cihaz internete cikamaz.
-    "Atmayi Durdur" deyince ARP tablosu duzelir,
-    cihaz yeniden baglanir.
+        ① Tablodan cihaza tıkla (satır seçilir).
+        ② "Seçili Cihazı At" butonuna bas.
+        ③ Cihazın interneti kesilir.
 
-  - Bu program sadece kendi aginda ve yetkili
-    oldugun cihazlarda kullanilmak icindir.
-    Baskasinin aginda kullanmak TCK 243/244
-    kapsaminda suctur.
+        Geri açmak için: "Atmayı Durdur".
+        Cihaz 5-10 saniye içinde yeniden bağlanır.
+
+     💥 TÜM CİHAZLARI ATMAK İSTİYORSAN:
+
+        "Tümünü At" butonuna bas.
+        Onay penceresinde "Evet" de.
 
 
-================================================================
-  BOLUM 12 — HIZLI OZET (ezber)
-================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ⚠️  ÖNEMLİ BİLGİLER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  Kurulum sirasi:
-    1. Python kur (Add to PATH isaretle)
-    2. Npcap kur (WinPcap modu isaretle)
-    3. Bilgisayari yeniden baslat
-    4. Kodu indir, klasore cikar
+  🔒 HTTPS İÇERİĞİ GÖRÜNMEZ
+     Sadece site adı (google.com gibi) görünür.
+     Sayfa içeriği, mesajlar, form verileri şifreli
+     olduğu için okunamaz. Bu, modern şifrelemenin
+     doğal sınırıdır.
+
+  📱 MAC ADRESİ DEĞİŞEBİLİR
+     Bazı Android (10+) ve iOS (14+) cihazlar Wi-Fi'da
+     rastgele MAC kullanır. Bu durumda "Üretici"
+     sütununda "?" görünebilir. Normal.
+
+  🌐 CLIENT ISOLATION
+     Bazı modemlerde "AP isolation" veya "client
+     isolation" açıksa cihazlar birbirini göremez.
+     Modem arayüzünden kapat.
+
+  🎯 KENDİ İNTERNETİN KESİLMEZ
+     Program sadece seçili hedef cihazı keser.
+     Kendi bilgisayarını hedef listesinden çıkarır.
+
+  ⚖️  SADECE KENDİ AĞINDA KULLAN
+     Bu program kendi ağında ve yetkili olduğun
+     cihazlarda kullanılmak içindir. Başkasının
+     ağında kullanmak TCK 243/244 kapsamında suçtur.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🔧 SORUN GİDERME
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ❌ "'py' is not recognized"
+  ✅ Python PATH'te değil.
+     → Python'u kaldır, tekrar kur.
+     → "Add Python to PATH" kutusunu işaretle.
+     → Bilgisayarı yeniden başlat.
+
+  ❌ "Npcap bulunamadı"
+  ✅ Npcap kurulu değil veya yanlış modda.
+     → npcap.com'dan indir.
+     → "WinPcap API-compatible Mode" işaretle.
+     → Bilgisayarı yeniden başlat.
+
+  ❌ "scapy bulunamadı"
+  ✅ Kütüphane eksik.
+     → py -m pip install scapy
+
+  ❌ "PyQt6 bulunamadı"
+  ✅ Kütüphane eksik.
+     → py -m pip install PyQt6
+
+  ❌ EXE'ye çift tıklıyorum, hiçbir şey olmuyor
+  ✅ Hata gizlenmiş olabilir. CMD'den çalıştır:
+     → cd C:\Users\%USERNAME%\Downloads\dist
+     → WiFiMonitor.exe
+     → Çıkan hata mesajını oku.
+
+  ❌ "Ağı Tara"ya basınca program donuyor
+  ✅ Eski sürüm kullanıyorsun.
+     → GitHub'dan en son sürümü indir.
+     → Yeni sürümde tarama arka planda çalışır,
+        program donmaz.
+
+  ❌ Cihazlar taranmıyor, tablo boş
+  ✅ 1. Doğru adaptörü seçtiğinden emin ol.
+     2. Modemde client isolation açıksa kapat.
+     3. Gateway IP'yi ipconfig ile kontrol et.
+
+  ❌ "Gateway MAC bulunamadı"
+  ✅ Gateway IP yanlış.
+     → CMD'de ipconfig çalıştır.
+     → "Default Gateway" satırındaki IP'yi kopyala.
+     → Kutuya yapıştır.
+
+  ❌ Cihaz atılmıyor, internet kesilmiyor
+  ✅ 1. Programı YÖNETİCİ olarak çalıştır.
+     2. Modemde statik ARP binding kapalı olmalı.
+     3. Hedef cihaz Wi-Fi'da mı, kontrol et.
+
+  ❌ Windows Defender exe'yi siliyor
+  ✅ İmzasız exe'lerde sık görülür.
+     → Windows Güvenlik → Virüs ve tehdit koruması
+     → Ayarları yönet → Dışlamalar → Dışlama ekle
+     → Klasör → "dist" klasörünü seç.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  📋 HIZLI ÖZET (ezber kartı)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  KURULUM (sırayla):
+
+    1. Python kur  →  "Add to PATH" işaretle ✓
+    2. Npcap kur   →  "WinPcap modu" işaretle ✓
+    3. Bilgisayarı yeniden başlat
+    4. Kodu indir, klasöre çıkar
     5. py -m pip install PyQt6 scapy hostlens etherlyzer pyinstaller
-    6. py wifimon_gui.py         (test)
-    7. PyInstaller komutu        (exe)
-    8. dist\WiFiMonitor.exe'yi masaustune tasi
-    9. Sag tik -> Yonetici olarak calistir
+    6. py wifimon_gui.py              ← test
+    7. PyInstaller komutu             ← exe üret
+    8. dist\WiFiMonitor.exe'yi masaüstüne kopyala
+    9. Sağ tık → Yönetici olarak çalıştır
 
-  Kullanim:
-    1. Adaptor sec
-    2. Agi Tara
-    3. Izlemeyi Baslat  (izlemek icin)
-       Secili Cihazi At  (kesmek icin)
-       Atmayi Durdur     (geri acmak icin)
+  KULLANIM (3 adım):
+
+    1. Adaptör seç
+    2. Ağı Tara
+    3. İzle / At / Durdur
 
 
-================================================================
-  SON
-================================================================
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  🆘 TAKILDIN MI?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Takildigin yer olursa BOLUM 10'a bak.
-Hala cozulmediyse hata mesajini kopyala, bana yolla.
+  Önce yukarıdaki "SORUN GİDERME" bölümüne bak.
+
+  Hâlâ çözülmediyse:
+    → Hata mesajını kopyala
+    → Hangi adımda takıldığını yaz
+    → Bana gönder
+
+  Her sorunun bir çözümü var. Pes etme.
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║                    KOLAY GELSİN! 🚀                          ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+
+
+
+
+NOT:Bu wifi monitör programı ai ile yapılmıştır
